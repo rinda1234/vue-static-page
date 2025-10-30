@@ -1,0 +1,50 @@
+name: Deploy Vite to GitHub Pages
+# 특정한 명령어가 들어왔을때 아래코드를 실행(ex) push명령어),
+on:
+  push:
+    branches: [ main ]  # 메인 브랜치에 푸시될 때만 배포
+  workflow_dispatch:    # 수동 실행도 가능
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+#핵심, buld라는 job을 하나 만듦.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm' #npm을 사용하기 위해
+
+      - name: Install deps
+        run: npm ci # 필요한 패키지 다운.
+
+      - name: Build
+        run: npm run build #build라는 파일을 만듦.
+# 깃허브 페이지스를 만들어서
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+# 자동으로 배포
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
