@@ -1,5 +1,5 @@
 name: Deploy Vite to GitHub Pages
-# 특정한 명령어가 들어왔을때 아래코드를 실행(ex) push명령어),
+# 특정한 명령어가 들어왔을때 아래코드를 실행(ex) push명령어),S
 on:
   push:
     branches: [ main ]  # 메인 브랜치에 푸시될 때만 배포
