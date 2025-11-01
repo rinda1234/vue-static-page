@@ -1,3 +1,5 @@
+#배포링크
+https://rinda1234.github.io/vue-static-page/
 # Vue 3 + TypeScript + Vite
 
 Vue 3 + TypeScript + Vite 기반으로 제작한 **한가위(추석)** 테
