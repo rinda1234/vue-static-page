@@ -6,7 +6,7 @@
  * - ✅ 제기차기(간단 물리 시뮬레이션) 추가
  */
 
-import { ref, reactive, computed, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount, nextTick } from 'vue'
 
 /* --------------------------
    Asset URLs (Vite friendly)
@@ -159,12 +159,13 @@ function submitWish() {
 /* --------------------------
    Lanterns Canvas (robust resize)
    -------------------------- */
-let lanternCanvasEl: HTMLCanvasElement | null = null
+// let lanternCanvasEl: HTMLCanvasElement | null = null
 let lanternRAF = 0
 const lanterns: Array<any> = []
 function setupLanterns(canvas: HTMLCanvasElement) {
-  lanternCanvasEl = canvas
-  const ctx = canvas.getContext('2d')!
+  // lanternCanvasEl = canvas
+  const ctx = (canvas as HTMLCanvasElement).getContext('2d')!
+
   function resize() {
     const DPR = devicePixelRatio || 1
     canvas.width = Math.floor(window.innerWidth * DPR)
@@ -275,7 +276,7 @@ const yutResult = ref<string | null>(null)
 function rollYut() {
   const outcomes = ['도','개','걸','윷','모']
   const idx = Math.floor(Math.random() * outcomes.length)
-  yutResult.value = outcomes[idx]
+  yutResult.value = outcomes[idx] ?? null
   speak(`결과는 ${yutResult.value} 입니다`)
 }
 
@@ -701,7 +702,7 @@ let cleanupMoon: (() => void) | null = null
               <button @click="kickJegi" class="btn small">차기!</button>
               <label class="pow">
                 힘: <input type="range" min="6" max="16" step="1" value="10"
-                          @input="setJegiPower(+$event.target.value)" />
+                          @input="setJegiPower(Number((($event.target as HTMLInputElement).value)))" />
               </label>
               <span class="score">성공: <strong>{{ jegiScore }}</strong></span>
             </div>
