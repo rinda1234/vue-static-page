@@ -436,7 +436,7 @@ onMounted(() => {
         }
       })
       function animate(){
-        ctx.clearRect(0,0,canvas.width,canvas.height)
+        ctx.clearRect(0,0,canvas!.width,canvas!.height)
         for (const p of points){
           const dx = p.ox - p.x, dy = p.oy - p.y
           p.vx += dx*0.26; p.vy += dy*0.26
@@ -728,9 +728,11 @@ let cleanupMoon: (() => void) | null = null
       <section class="section stories">
         <h2>가족의 달빛 일기</h2>
         <div class="story-uploader">
-          <input type="file" accept="image/*" @change="handleStoryUpload" />
+          <label class="btn small">
+            📸 사진 업로드
+            <input type="file" accept="image/*" @change="handleStoryUpload" style="display:none" />
+          </label>
           <input v-model="storyText" placeholder="짧은 한줄 추억" />
-          <button @click="$refs.fileInput?.click()" style="display:none">파일열기</button>
         </div>
         <div class="timeline">
           <article v-for="s in stories" :key="s.id" class="story-card">
