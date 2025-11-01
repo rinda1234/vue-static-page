@@ -221,10 +221,10 @@ function setupLanterns(canvas: HTMLCanvasElement) {
 /* --------------------------
    Moon Canvas (parallax + resize)
    -------------------------- */
-let moonCanvasEl: HTMLCanvasElement | null = null
+// let moonCanvasEl: HTMLCanvasElement | null = null
 let moonRAF = 0
 function setupMoon(canvas: HTMLCanvasElement) {
-  moonCanvasEl = canvas
+  // moonCanvasEl = canvas
   const ctx = canvas.getContext('2d')!
   function resize() {
     const DPR = devicePixelRatio || 1
@@ -394,6 +394,7 @@ onMounted(() => {
 
     // 송편
     const canvas = document.getElementById('songpyeon-canvas') as HTMLCanvasElement | null
+    if (!canvas) return
     if (canvas) {
       const ctx = canvas.getContext('2d')!
       const points:any[] = []
@@ -578,15 +579,17 @@ function initJegi(canvas: HTMLCanvasElement){
   canvas.addEventListener('touchstart', (e) => { e.preventDefault(); kick() }, { passive: false })
 
   // 외부에서 쓸 수 있도록 바인딩
-  ;(kickJegi as any)._impl = kick
+  ;(kickJegi as any)._impl = kick as () => void
 
   draw()
   step()
 }
 
 // 외부 버튼용 래퍼
-function kickJegi(){ ((kickJegi as any)._impl?.() ?? (()=>{}))() }
-
+function kickJegi() {
+  const fn = (kickJegi as any)._impl as (() => void) | undefined
+  fn?.()
+}
 /* --------------------------
    Lifecycle cleanup refs
    -------------------------- */
@@ -679,7 +682,7 @@ let cleanupMoon: (() => void) | null = null
             <div class="ganggang-container">
               <div :class="['circle-container', { spin: ganggangSpin }]">
                 <div
-                    v-for="(d, i) in 8"
+                    v-for="i in 8"
                     :key="i"
                     class="dancer"
                     :style="{
@@ -763,15 +766,15 @@ let cleanupMoon: (() => void) | null = null
         <button class="modal-close" @click="closeRecipe" aria-label="닫기">✕</button>
 
         <div v-if="recipeModal.foodId" class="recipe-content">
-          <h3>{{ foods.find(f=>f.id===recipeModal.foodId)?.name }}</h3>
+          <h3>{{ foods.find(f=>f.id===recipeModal.foodId)!.name }}</h3>
 
           <!-- 줄바꿈 유지 -->
           <pre class="recipe-text">
-{{ foods.find(f=>f.id===recipeModal.foodId)?.recipe }}
+{{ foods.find(f=>f.id===recipeModal.foodId)!.recipe }}
       </pre>
 
           <img
-              :src="foods.find(f=>f.id===recipeModal.foodId)?.img"
+              :src="foods.find(f=>f.id===recipeModal.foodId)!.img"
               alt="recipe image"
               class="recipe-image"
           />
