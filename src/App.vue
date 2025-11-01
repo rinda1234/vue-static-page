@@ -588,7 +588,7 @@ function initJegi(canvas: HTMLCanvasElement){
 // 외부 버튼용 래퍼
 function kickJegi() {
   const fn = (kickJegi as any)._impl as (() => void) | undefined
-  fn?.()
+  if (fn) fn()
 }
 /* --------------------------
    Lifecycle cleanup refs
