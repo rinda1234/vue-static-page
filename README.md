@@ -1,6 +1,14 @@
+# Vue 3 + TypeScript + Vite
+
+Vue 3 + TypeScript + Vite 기반으로 제작한 **한가위(추석)** 테
+This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+
 # 🌕 한가위 인터랙티브 웹페이지 (Chuseok Interactive Page)
 
-Vue 3 + TypeScript + Vite 기반으로 제작한 **한가위(추석)** 테마의 웹사이트입니다.  
+
+Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+
+마의 웹사이트입니다.  
 달빛 아래에서 전통 음식, 놀이, 가족의 이야기, 그리고 추억을 아름답게 표현할 수 있도록 기획되었습니다.  
 이 프로젝트는 실제 대화형 AI와의 협업을 통해 완성된 실험적 인터랙티브 웹페이지입니다.
 
