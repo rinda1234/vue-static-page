@@ -329,19 +329,17 @@ async function updateDominantFromLatestStory() {
   c.width = Math.min(100, img.width)
   c.height = Math.min(100, img.height)
   ctx.drawImage(img, 0, 0, c.width, c.height)
-  const ctx = c.getContext('2d')
   if (!ctx) return // ✅ ctx가 null이면 함수 종료
 
-  const imageData = ctx.getImageData(0, 0, c.width, c.height)
-  if (!imageData) return // ✅ imageData가 undefined면 함수 종료
+  const imageData = ctx.getImageData(0, 0, c.width, c.height)as ImageData
+  const data = imageData.data as Uint8ClampedArray
 
-  const data = imageData.data // 이제 안전하게 접근 가능!
   let r = 0, g = 0, b = 0, count = 0
 
   for (let i = 0; i < data.length; i += 4) {
-    r += data[i]
-    g += data[i + 1]
-    b += data[i + 2]
+    r += data[i]!
+    g += data[i + 1]!
+    b += data[i + 2]!
     count++
   }
   r = Math.round(r/count); g = Math.round(g/count); b = Math.round(b/count)
